@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+OPTIND=2 # Don't touch it
+FILENAME=$1
+SUCCESS="false"
+while getopts "d:" flag
+do
+     case $flag in
+         d)
+           echo "You have requested for $OPTARG driver."
+           if [ "$OPTARG" = "cassandra" ]
+           then
+              package="com.datastax.spark:spark-cassandra-connector_2.10:1.5.0-M2"
+           else
+                echo "Couldn't find the mentioned driver."
+           fi
+           cmd="--packages $package "
+           SUCCESS="true"
+           shift
+           ;;
+         *)
+            echo "$OPTARG"
+            shift
+            ;;
+     esac
+     shift
+done
+
+if [ "$SUCCESS" = "true" ]
+then
+  final_command="spark-submit "
+  final_command+="$cmd"
+  final_command+="$FILENAME"
+  eval $final_command
+else
+  echo "Usage: ./bin/simple-runner <app.py> -d <cassandra>"
+fi

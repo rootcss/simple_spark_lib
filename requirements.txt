@@ -1,0 +1,2 @@
+setuptools == 18.5
+time_uuid == 0.1.1
