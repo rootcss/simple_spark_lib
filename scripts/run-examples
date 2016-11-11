@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+read -r -p "This will re-install the application. Are you sure? [y/N] " response
+case $response in
+    [yY][eE][sS]|[yY])
+        sudo pip uninstall simple_spark_lib
+        sudo python setup.py install
+        cd examples/
+        simple-runner example_1.py -d cassandra
+        echo ""
+        echo "..................................."
+        echo ""
+        simple-runner example_2.py -d cassandra
+        ;;
+    *)
+        echo "Closing."
+        ;;
+esac

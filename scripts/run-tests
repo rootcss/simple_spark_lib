@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+read -r -p "Executing the tests, Are you sure? [y/N] " response
+case $response in
+    [yY][eE][sS]|[yY])
+        cd tests/
+        ../scripts/simple-runner test_1.py -d cassandra
+        echo ""
+        echo "..................................."
+        echo ""
+        ../scripts/simple-runner test_2.py -d cassandra
+        ;;
+    *)
+        echo "Closing."
+        ;;
+esac
