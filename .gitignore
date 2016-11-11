@@ -1,0 +1,5 @@
+*.pyc
+refresh_setup.sh
+dist/
+*.egg-info/
+build/
