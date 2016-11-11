@@ -6,7 +6,7 @@
 </ol>
 
 ### Prerequisite:
-This assumes that you have access to Apache Spark and Cassandra clusters.
+This assumes that you have access to Apache Spark. (and Cassandra clusters if working with cassandra workflow)
 
 ### Installation:
 Clone the repo and build with the command:
@@ -34,12 +34,13 @@ cassandra_connection_config = {
 
 # Define Cassandra Schema information
 cassandra_config = {
-  'keyspace':         'simple_events_production',
-  'table_name':       'api_events',
-  'cluster':          'rootCSSCluster',
-  'temp_table_name':  'api_events'
+  'cluster': 'rootCSSCluster',
+  'tables': {
+    'api_events': 'simpl_events_production.api_events',
+    # <alias of table> : <keyspace>.<table_name>
+    # (Spark's temporary table name) : Cassandra's config
+  }
 }
-
 # Initiate your workflow
 workflow = SimpleSparkCassandraWorkflow(appName="Simple Example Worker")
 
